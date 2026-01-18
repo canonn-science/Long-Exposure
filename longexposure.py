@@ -1,4 +1,6 @@
+
 import os
+import sys
 import cv2
 import numpy as np
 import glob
@@ -7,8 +9,14 @@ import shutil
 # Supported video extensions
 VIDEO_EXTENSIONS = [".mp4", ".avi", ".mov", ".mkv"]
 
+
 # Directories
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, 'frozen', False):
+    # Running as a bundled executable
+    CURRENT_DIR = os.path.dirname(sys.executable)
+else:
+    # Running from source
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPOSURES_DIR = os.path.join(CURRENT_DIR, "exposures")
 PROCESSED_DIR = os.path.join(CURRENT_DIR, "processed")
 
