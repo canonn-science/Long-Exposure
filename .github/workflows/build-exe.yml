@@ -1,0 +1,37 @@
+name: Build Windows EXE for longexposure
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'longexposure.py'
+      - '.github/workflows/build-exe.yml'
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install opencv-python numpy
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Package longexposure.py as EXE
+        run: pyinstaller --onefile --name longexposure longexposure.py
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: longexposure-exe
+          path: dist/longexposure.exe

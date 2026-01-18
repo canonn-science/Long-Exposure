@@ -1,0 +1,25 @@
+# Ignore exposures and processed directories
+exposures/
+processed/
+
+# Ignore PNG images
+*.png
+
+# Ignore common video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller build outputs
+build/
+dist/
+*.spec
+
+# VS Code settings
+.vscode/
