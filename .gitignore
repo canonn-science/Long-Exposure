@@ -2,8 +2,10 @@
 exposures/
 processed/
 
-# Ignore PNG images
-*.png
+
+# Ignore PNG images in exposures/ and root, but not in samples/
+/*.png
+exposures/*.png
 
 # Ignore common video files
 *.mp4
