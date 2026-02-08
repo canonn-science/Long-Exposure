@@ -41,23 +41,25 @@ def process_video(video_path):
         print(f"  No frames in {video_path}")
         cap.release()
         return
-    acc = np.zeros_like(frame, dtype=np.float32)
-    count = 0
-    while ret:
+    max_frame = frame.astype(np.uint8)
+    count = 1
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
         if count % 50 == 0:
             print(f"    Processing frame {count+1}...")
-        acc += frame.astype(np.float32)
+        # Take the maximum value per pixel per channel
+        max_frame = np.maximum(max_frame, frame.astype(np.uint8))
         count += 1
-        ret, frame = cap.read()
     cap.release()
     if count == 0:
         print(f"  No frames processed in {video_path}")
         return
-    print(f"  Averaging {count} frames...")
-    avg = (acc / count).astype(np.uint8)
+    print(f"  Composited {count} frames using max brightness...")
     base = os.path.splitext(os.path.basename(video_path))[0]
     out_path = os.path.join(EXPOSURES_DIR, base + ".png")
-    cv2.imwrite(out_path, avg)
+    cv2.imwrite(out_path, max_frame)
     print(f"  Saved long exposure image to {out_path}")
     # Move video to processed
     shutil.move(video_path, os.path.join(PROCESSED_DIR, os.path.basename(video_path)))
