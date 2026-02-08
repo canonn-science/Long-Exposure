@@ -1,4 +1,3 @@
-
 import os
 import sys
 import cv2
@@ -11,7 +10,7 @@ VIDEO_EXTENSIONS = [".mp4", ".avi", ".mov", ".mkv"]
 
 
 # Directories
-if getattr(sys, 'frozen', False):
+if getattr(sys, "frozen", False):
     # Running as a bundled executable
     CURRENT_DIR = os.path.dirname(sys.executable)
 else:
